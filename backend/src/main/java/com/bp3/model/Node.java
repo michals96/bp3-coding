@@ -10,24 +10,24 @@ public interface Node {
   String getId();
 
   /**
-   * Returns the name for the Node.
-   */
-  String getName();
-
-  /**
-   * Returns the type of the Node.
-   */
-  NodeType getType();
-
-  /**
    * Sets unique identifier for the {@link Node}.
    */
   void setId(String id);
 
   /**
+   * Returns the name for the Node.
+   */
+  String getName();
+
+  /**
    * Sets {@link Node}'s name.
    */
   void setName(String name);
+
+  /**
+   * Returns the type of the Node.
+   */
+  NodeType getType();
 
   /**
    * Sets type for the {@link Node}.

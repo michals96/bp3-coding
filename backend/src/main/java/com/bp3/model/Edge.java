@@ -11,14 +11,14 @@ public interface Edge {
   String getFrom();
 
   /**
-   * Returns the unique identifier for the target {@link Node}.
-   */
-  String getTo();
-
-  /**
    * Sets unique identifier for the target {@link Node}.
    */
   void setFrom(String nodeId);
+
+  /**
+   * Returns the unique identifier for the target {@link Node}.
+   */
+  String getTo();
 
   /**
    * Sets unique identifier for the source {@link Node}.
