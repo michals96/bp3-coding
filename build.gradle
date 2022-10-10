@@ -1,0 +1,25 @@
+plugins {
+    id 'base'
+}
+
+subprojects {
+  plugins.withType(JavaPlugin) {
+    repositories {
+      // Use jcenter for resolving your dependencies.
+      // You can declare any Maven/Ivy/file repository here.
+      jcenter()
+    }
+  }
+}
+
+task packageDistribution(type: Zip) {
+  from (project.rootDir) {
+    exclude ('*/*.iml')
+    exclude('build')
+    exclude('.idea')
+    exclude('.gradle')
+    exclude('*/node_modules')
+  }
+}
+
+defaultTasks 'clean', 'build'

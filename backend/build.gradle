@@ -1,0 +1,24 @@
+// Apply the java plugin to add support for Java
+apply plugin: 'java'
+
+// Apply the application plugin to add support for building an application
+apply plugin: 'application'
+
+// Apply the checkstyle plugin to add validates source code against the coding standard
+// apply plugin: 'checkstyle'
+
+dependencies {
+    // This dependency is found on compile classpath of this component and consumers.
+    compile 'org.slf4j:slf4j-api:1.7.25'
+    compile 'org.slf4j:slf4j-simple:1.7.25'
+
+    // Use JUnit test framework
+    testCompile 'junit:junit:4.12'
+}
+
+// Define the main class for the application
+mainClassName = 'App'
+
+// checkstyle {
+//  toolVersion "8.9"
+// }

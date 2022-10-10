@@ -1,0 +1,56 @@
+{
+  "nodes": [
+    {
+      "id": 0,
+      "name": "Start",
+      "type": "Start"
+    },
+    {
+      "id": 1,
+      "name": "A",
+      "type": "HumanTask"
+    },
+    {
+      "id": 2,
+      "name": "B",
+      "type": "HumanTask"
+    },
+    {
+      "id": 3,
+      "name": "C",
+      "type": "ServiceTask"
+    },
+    {
+      "id": 4,
+      "name": "D",
+      "type": "HumanTask"
+    },
+    {
+      "id": 5,
+      "name": "End",
+      "type": "End"
+    }
+  ],
+  "edges": [
+    {
+      "from": 0,
+      "to": 1
+    },
+    {
+      "from": 1,
+      "to": 2
+    },
+    {
+      "from": 2,
+      "to": 3
+    },
+    {
+      "from": 3,
+      "to": 4
+    },
+    {
+      "from": 4,
+      "to": 5
+    }
+  ]
+}
