@@ -1,24 +1,18 @@
 package com.bp3.file;
 
-import java.io.BufferedReader;
+import com.bp3.model.BpmnProcess;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 
 public class FileLoaderService implements FileService {
-  public FileLoaderService(){}
+  public FileLoaderService() {
+  }
 
   @Override
   public void process() throws IOException {
-    File file = new File(
-        "C:\\Users\\micha\\Desktop\\mr\\bp3-coding\\data\\1-simple-process.json");
-
-    BufferedReader br
-        = new BufferedReader(new FileReader(file));
-
-    String st;
-    while ((st = br.readLine()) != null) {
-      System.out.println(st);
-    }
+    final var file = new File("C:\\Users\\micha\\Desktop\\mr\\bp3-coding\\data\\1-simple-process.json");
+    final var objectMapper = new ObjectMapper();
+    final var bpmnProcess = objectMapper.readValue(file, BpmnProcess.class);
   }
 }

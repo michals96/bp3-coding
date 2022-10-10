@@ -8,12 +8,16 @@ apply plugin: 'application'
 // apply plugin: 'checkstyle'
 
 dependencies {
-    // This dependency is found on compile classpath of this component and consumers.
-    compile 'org.slf4j:slf4j-api:1.7.25'
-    compile 'org.slf4j:slf4j-simple:1.7.25'
+  // This dependency is found on compile classpath of this component and consumers.
+  compile 'org.slf4j:slf4j-api:1.7.25'
+  compile 'org.slf4j:slf4j-simple:1.7.25'
 
-    // Use JUnit test framework
-    testCompile 'junit:junit:4.12'
+  // Use JUnit test framework
+  testCompile 'junit:junit:4.12'
+
+  // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+  implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
+
 }
 
 // Define the main class for the application
