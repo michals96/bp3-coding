@@ -1,13 +1,12 @@
 package factory;
 
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+
 import com.bp3.model.BpmnProcess;
 import com.bp3.model.NodeType;
 import com.bp3.model.SimpleEdge;
 import com.bp3.model.SimpleNode;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertNotSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestBpmnProcessFactory {
   private TestBpmnProcessFactory() {

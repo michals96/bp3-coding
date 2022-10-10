@@ -27,11 +27,11 @@ public class ProcessParserTest {
     final var reducedProcess = processParser.reduceProcess(bpmnProcess);
 
     // then
+    assertNoServiceTasks(reducedProcess);
     assertNotEquals(bpmnProcess.getEdges().size(), reducedProcess.getEdges().size());
     assertNotEquals(bpmnProcess.getNodes().size(), reducedProcess.getNodes().size());
     assertTrue(bpmnProcess.getEdges().size() > reducedProcess.getEdges().size());
     assertTrue(bpmnProcess.getNodes().size() > reducedProcess.getNodes().size());
-    assertNoServiceTasks(reducedProcess);
   }
 
   @Test
@@ -43,8 +43,8 @@ public class ProcessParserTest {
     final var reducedProcess = processParser.reduceProcess(bpmnProcess);
 
     // then
+    assertNoServiceTasks(reducedProcess);
     assertEquals(bpmnProcess.getEdges().size(), reducedProcess.getEdges().size());
     assertEquals(bpmnProcess.getNodes().size(), reducedProcess.getNodes().size());
-    assertNoServiceTasks(reducedProcess);
   }
 }
