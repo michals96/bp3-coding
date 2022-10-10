@@ -1,5 +1,6 @@
 package com.bp3.model;
 
+import com.bp3.model.contract.Node;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.Map;
 import java.util.Optional;

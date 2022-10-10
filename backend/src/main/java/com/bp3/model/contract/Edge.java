@@ -1,4 +1,4 @@
-package com.bp3.model;
+package com.bp3.model.contract;
 
 /**
  * Public contract for a class that plays the role of a edge between two {@link Node}s within

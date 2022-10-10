@@ -1,5 +1,6 @@
 package com.bp3.model;
 
+import com.bp3.model.contract.Node;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

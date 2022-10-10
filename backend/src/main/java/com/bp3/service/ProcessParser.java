@@ -15,9 +15,14 @@ class ProcessParser {
 
   public BpmnProcess reduceProcess(BpmnProcess process) {
     final var reducedNodes = reduceServiceTasks(process);
-    // If there were no nodes reduced that means that there were no service tasks present, hence do not create new edges
     final var edges = ifReducedNodes(process, reducedNodes) ? createNewEdges(reducedNodes) : process.getEdges();
     return new BpmnProcess(reducedNodes, edges);
+  }
+
+  private List<SimpleNode> reduceServiceTasks(final BpmnProcess process) {
+    return process.getNodes().stream()
+        .filter(n -> n.getType() != NodeType.SERVICE_TASK)
+        .collect(Collectors.toList());
   }
 
   private boolean ifReducedNodes(final BpmnProcess process, final List<SimpleNode> reducedNodes) {
@@ -34,11 +39,5 @@ class ProcessParser {
     }
 
     return edges;
-  }
-
-  private List<SimpleNode> reduceServiceTasks(final BpmnProcess process) {
-    return process.getNodes().stream()
-        .filter(n -> n.getType() != NodeType.SERVICE_TASK)
-        .collect(Collectors.toList());
   }
 }
