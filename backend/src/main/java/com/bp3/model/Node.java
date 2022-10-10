@@ -1,4 +1,4 @@
-package com.bp3;
+package com.bp3.model;
 
 /**
  * Public contract for a class that plays the role of a node within a BPM process diagram.

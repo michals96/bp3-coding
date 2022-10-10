@@ -1,4 +1,4 @@
-package com.bp3;
+package com.bp3.model;
 
 /**
  * The different types of {@link Node}s within a BPM process diagram.
