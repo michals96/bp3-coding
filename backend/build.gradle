@@ -8,6 +8,8 @@ apply plugin: 'application'
 // apply plugin: 'checkstyle'
 
 dependencies {
+  implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+
   // This dependency is found on compile classpath of this component and consumers.
   compile 'org.slf4j:slf4j-api:1.7.25'
   compile 'org.slf4j:slf4j-simple:1.7.25'

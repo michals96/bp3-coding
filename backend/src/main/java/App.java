@@ -1,8 +1,8 @@
-import com.bp3.file.FileService;
+import com.bp3.service.ProcessService;
 import java.io.IOException;
 
 public class App {
-  private static final FileService loaderService = new FileService();
+  private static final ProcessService loaderService = new ProcessService();
 
   public static void main(String[] args) throws IOException {
     final var pathToFile = "C:\\Users\\micha\\Desktop\\mr\\bp3-coding\\data\\1-simple-process.json";
@@ -11,6 +11,6 @@ public class App {
     //final var pathToFile = "C:\\Users\\micha\\Desktop\\mr\\bp3-coding\\data\\4-recursive-branching-process.json";
     final var saveFilePath = "C:\\Users\\micha\\Desktop\\mr\\bp3-coding\\data\\parsed.json";
 
-    loaderService.execute(pathToFile, saveFilePath);
+    loaderService.reduce(pathToFile, saveFilePath);
   }
 }
