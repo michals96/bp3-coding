@@ -1,6 +1,6 @@
 package com.bp3.model;
 
-public class SimpleEdge  {
+public class SimpleEdge implements Edge {
   private String from;
   private String to;
 
@@ -12,18 +12,22 @@ public class SimpleEdge  {
   public SimpleEdge() {
   }
 
+  @Override
   public String getFrom() {
     return this.from;
   }
 
-  public String getTo() {
-    return this.to;
-  }
-
+  @Override
   public void setFrom(final String nodeId) {
     this.from = nodeId;
   }
 
+  @Override
+  public String getTo() {
+    return this.to;
+  }
+
+  @Override
   public void setTo(final String nodeId) {
     this.to = nodeId;
   }
