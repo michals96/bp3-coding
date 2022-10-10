@@ -5,6 +5,8 @@ import com.bp3.model.NodeType;
 import com.bp3.model.SimpleEdge;
 import com.bp3.model.SimpleNode;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestBpmnProcessFactory {
@@ -48,7 +50,7 @@ public class TestBpmnProcessFactory {
   }
 
   public static boolean assertNoServiceTasks(BpmnProcess process) {
-    process.getNodes().forEach(n -> assertTrue(n.getType() != NodeType.SERVICE_TASK));
+    process.getNodes().forEach(n -> assertNotSame(n.getType(), NodeType.SERVICE_TASK));
     return true;
   }
 }
