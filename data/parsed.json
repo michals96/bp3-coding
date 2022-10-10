@@ -1,0 +1,50 @@
+{
+  "nodes" : [ {
+    "id" : "0",
+    "name" : "Start",
+    "type" : "START"
+  }, {
+    "id" : "2",
+    "name" : "B",
+    "type" : "HUMAN_TASK"
+  }, {
+    "id" : "3",
+    "name" : "G1",
+    "type" : "GATEWAY"
+  }, {
+    "id" : "4",
+    "name" : "C",
+    "type" : "HUMAN_TASK"
+  }, {
+    "id" : "5",
+    "name" : "D",
+    "type" : "HUMAN_TASK"
+  }, {
+    "id" : "6",
+    "name" : "G2",
+    "type" : "GATEWAY"
+  }, {
+    "id" : "8",
+    "name" : "End",
+    "type" : "END"
+  } ],
+  "edges" : [ {
+    "from" : "0",
+    "to" : "2"
+  }, {
+    "from" : "2",
+    "to" : "3"
+  }, {
+    "from" : "3",
+    "to" : "4"
+  }, {
+    "from" : "4",
+    "to" : "5"
+  }, {
+    "from" : "5",
+    "to" : "6"
+  }, {
+    "from" : "6",
+    "to" : "8"
+  } ]
+}
