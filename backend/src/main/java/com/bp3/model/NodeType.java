@@ -28,9 +28,9 @@ public enum NodeType {
   }
 
   @JsonCreator
-  public static NodeType fromString(String string) {
+  public static NodeType fromString(String nodeType) {
     return Optional
-        .ofNullable(FORMAT_MAP.get(string))
-        .orElseThrow(() -> new IllegalArgumentException(string));
+        .ofNullable(FORMAT_MAP.get(nodeType))
+        .orElseThrow(() -> new IllegalArgumentException(nodeType));
   }
 }
