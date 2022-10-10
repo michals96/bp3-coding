@@ -22,11 +22,11 @@ public class ProcessService {
     saveProcessToFile(reducedProcess, saveFilePath);
   }
 
-  private void saveProcessToFile(final BpmnProcess reducedProcess, final String saveFilePath) throws IOException {
-    objectMapper.writeValue(new File(saveFilePath), reducedProcess);
-  }
-
   private BpmnProcess loadProcessFromFile(final String pathToFile) throws IOException {
     return objectMapper.readValue(new File(pathToFile), BpmnProcess.class);
+  }
+
+  private void saveProcessToFile(final BpmnProcess reducedProcess, final String saveFilePath) throws IOException {
+    objectMapper.writeValue(new File(saveFilePath), reducedProcess);
   }
 }
