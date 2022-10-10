@@ -1,34 +1,50 @@
 package com.bp3.service;
 
+import static factory.TestBpmnProcessFactory.assertNoServiceTasks;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import factory.TestBpmnProcessFactory;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
 
-class ProcessParserTest {
-  private ProcessParser processParser;
-  private TestBpmnProcessFactory processFactory;
+public class ProcessParserTest {
+  private static ProcessParser processParser;
 
   @BeforeAll
-  void init() {
+  static void init() {
     processParser = new ProcessParser();
-    processFactory = new TestBpmnProcessFactory();
   }
 
   @Test
   void shouldReduceProcessWithServiceTasks() {
     // given
-    final var bpmnProcess = processFactory.produceWithServiceTasks();
+    final var bpmnProcess = TestBpmnProcessFactory.produceWithServiceTasks();
 
     // when
     final var reducedProcess = processParser.reduceProcess(bpmnProcess);
 
     // then
-    assertNotSame(bpmnProcess, reducedProcess);
+    assertNotEquals(bpmnProcess.getEdges().size(), reducedProcess.getEdges().size());
+    assertNotEquals(bpmnProcess.getNodes().size(), reducedProcess.getNodes().size());
+    assertTrue(bpmnProcess.getEdges().size() > reducedProcess.getEdges().size());
+    assertTrue(bpmnProcess.getNodes().size() > reducedProcess.getNodes().size());
+    assertNoServiceTasks(reducedProcess);
   }
 
   @Test
   void shouldNotReduceProcessWithServiceTasks() {
+    // given
+    final var bpmnProcess = TestBpmnProcessFactory.produceWithOutServiceTasks();
+
+    // when
+    final var reducedProcess = processParser.reduceProcess(bpmnProcess);
+
+    // then
+    assertEquals(bpmnProcess.getEdges().size(), reducedProcess.getEdges().size());
+    assertEquals(bpmnProcess.getNodes().size(), reducedProcess.getNodes().size());
+    assertNoServiceTasks(reducedProcess);
   }
 }

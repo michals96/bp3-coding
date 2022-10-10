@@ -5,9 +5,13 @@ import com.bp3.model.NodeType;
 import com.bp3.model.SimpleEdge;
 import com.bp3.model.SimpleNode;
 import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestBpmnProcessFactory {
-  public BpmnProcess produceWithServiceTasks() {
+  private TestBpmnProcessFactory() {
+  }
+
+  public static BpmnProcess produceWithServiceTasks() {
     final var nodes = List.of(
         new SimpleNode("0", "Start", NodeType.START),
         new SimpleNode("1", "ServiceTask", NodeType.SERVICE_TASK),
@@ -27,7 +31,7 @@ public class TestBpmnProcessFactory {
     return new BpmnProcess(nodes, edges);
   }
 
-  public BpmnProcess produceWithOutServiceTasks() {
+  public static BpmnProcess produceWithOutServiceTasks() {
     final var nodes = List.of(
         new SimpleNode("0", "Start", NodeType.START),
         new SimpleNode("1", "HumanTask", NodeType.HUMAN_TASK),
@@ -41,5 +45,10 @@ public class TestBpmnProcessFactory {
     );
 
     return new BpmnProcess(nodes, edges);
+  }
+
+  public static boolean assertNoServiceTasks(BpmnProcess process) {
+    process.getNodes().forEach(n -> assertTrue(n.getType() != NodeType.SERVICE_TASK));
+    return true;
   }
 }
