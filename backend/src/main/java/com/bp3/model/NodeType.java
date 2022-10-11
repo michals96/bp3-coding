@@ -34,4 +34,9 @@ public enum NodeType {
         .ofNullable(FORMAT_MAP.get(nodeType))
         .orElseThrow(() -> new IllegalArgumentException(nodeType));
   }
+
+  @Override
+  public String toString() {
+    return formatted;
+  }
 }
