@@ -17,7 +17,6 @@ export class FileUploadComponent {
   }
 
   onFileChange(event: any) {
-    console.log(event.target.files[0])
     this.file = event.target.files[0]
   }
 
