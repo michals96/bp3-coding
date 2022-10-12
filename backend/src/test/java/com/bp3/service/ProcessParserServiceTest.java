@@ -1,4 +1,3 @@
-/*
 package com.bp3.service;
 
 import static factory.TestBpmnProcessFactory.assertNoServiceTasks;
@@ -11,12 +10,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 
-public class ProcessParserTest {
-  private static ProcessParser processParser;
+public class ProcessParserServiceTest {
+  private static ProcessParserService processParserService;
 
   @BeforeAll
   static void init() {
-    processParser = new ProcessParser();
+    processParserService = new ProcessParserService();
   }
 
   @Test
@@ -25,7 +24,7 @@ public class ProcessParserTest {
     final var bpmnProcess = TestBpmnProcessFactory.produceWithServiceTasks();
 
     // when
-    final var reducedProcess = processParser.reduceProcess(bpmnProcess);
+    final var reducedProcess = processParserService.reduceProcess(bpmnProcess);
 
     // then
     assertNoServiceTasks(reducedProcess);
@@ -41,7 +40,7 @@ public class ProcessParserTest {
     final var bpmnProcess = TestBpmnProcessFactory.produceWithOutServiceTasks();
 
     // when
-    final var reducedProcess = processParser.reduceProcess(bpmnProcess);
+    final var reducedProcess = processParserService.reduceProcess(bpmnProcess);
 
     // then
     assertNoServiceTasks(reducedProcess);
@@ -49,4 +48,3 @@ public class ProcessParserTest {
     assertEquals(bpmnProcess.getNodes().size(), reducedProcess.getNodes().size());
   }
 }
-*/

@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/parse")
+@RequestMapping
 @RequiredArgsConstructor
 public class BpmProcessController {
   private final ProcessService processService;
 
-  @PostMapping
-  public ResponseEntity<BpmnProcess> parse(@RequestParam("file") MultipartFile file) {
+  @PostMapping(value = "/parse", consumes = {"multipart/form-data"})
+  public ResponseEntity<BpmnProcess> parse(@RequestParam(name = "file") MultipartFile file) {
     return ResponseEntity.ok(processService.reduce(file));
   }
 }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @NoArgsConstructor
-class ProcessParser {
+class ProcessParserService {
 
   public BpmnProcess reduceProcess(BpmnProcess process) {
     final var reducedNodes = reduceServiceTasks(process);

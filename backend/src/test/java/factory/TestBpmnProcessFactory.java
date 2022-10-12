@@ -1,4 +1,3 @@
-/*
 package factory;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -54,4 +53,3 @@ public class TestBpmnProcessFactory {
     return true;
   }
 }
-*/

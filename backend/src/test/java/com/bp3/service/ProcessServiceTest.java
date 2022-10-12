@@ -1,67 +1,59 @@
-/*
 package com.bp3.service;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.when;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
+import com.bp3.exception.CorruptedFileException;
+import com.bp3.model.BpmnProcess;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import factory.TestBpmnProcessFactory;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
-public class ProcessServiceTest {
-  private static final String FILE_PATH = "src/test/resources/test-process.json";
-  private static final String EMPTY_FILE_PATH = "src/test/resources/empty-test-process.json";
-  private static final String CORRUPTED_FILE_PATH = "src/test/resources/corrupted-test-process.json";
-  private static final String BAD_FILE_PATH = "BAD_PATH";
-  private static final String SAVE_FILE_PATH = "src/test/resources/reduced-process.json";
-  private static ProcessService processService;
-
-  @BeforeAll
-  static void init() {
-    processService = new ProcessService();
-  }
-
-  @AfterEach
-  void clean() throws IOException {
-    File file = new File(SAVE_FILE_PATH);
-    Files.deleteIfExists(file.toPath());
-  }
+@ExtendWith(MockitoExtension.class)
+class ProcessServiceTest {
+  @InjectMocks
+  private ProcessService processService;
+  @Mock
+  private ProcessParserService processParserService;
+  @Mock
+  private ObjectMapper objectMapper;
 
   @Test
-  public void reduceCorrectJsonFileThrowsNoException() {
-    assertDoesNotThrow(() -> processService.reduce(FILE_PATH, SAVE_FILE_PATH));
-  }
+  void shouldReduceBpmnProcessOnCorrectFile() throws IOException {
+    // given
+    final var processWithServiceTasks = TestBpmnProcessFactory.produceWithServiceTasks();
+    final var processWithOutServiceTasks = TestBpmnProcessFactory.produceWithOutServiceTasks();
+    MultipartFile file =
+        new MockMultipartFile("file", new FileInputStream(new File("src/test/resources/test-process.json")));
 
-  @Test
-  public void reduceCorrectJsonFileSavesOutputFile() throws IOException {
     // when
-    processService.reduce(FILE_PATH, SAVE_FILE_PATH);
-    File file = new File(SAVE_FILE_PATH);
+    when(objectMapper.readValue(file.getBytes(), BpmnProcess.class)).thenReturn(processWithServiceTasks);
+    when(processParserService.reduceProcess(processWithServiceTasks)).thenReturn(processWithOutServiceTasks);
+    final var reducedProcess = processService.reduce(file);
 
     // then
-    assertTrue(file.isFile());
-    assertTrue(file.exists());
+    assertThat(reducedProcess).isNotNull();
+    assertThat(reducedProcess).isEqualTo(processWithOutServiceTasks);
   }
 
   @Test
-  public void reduceEmptyJsonFileThrowsException() {
-    assertThrows(JsonMappingException.class, () -> processService.reduce(EMPTY_FILE_PATH, SAVE_FILE_PATH));
-  }
+  void shouldThrowExceptionOnNullFile() throws IOException {
+    // given
+    MultipartFile file =
+        new MockMultipartFile("file", new FileInputStream(new File("src/test/resources/test-process.json")));
 
-  @Test
-  public void reduceNonExistingJsonFileThrowsException() {
-    assertThrows(FileNotFoundException.class, () -> processService.reduce(BAD_FILE_PATH, SAVE_FILE_PATH));
-  }
-
-  @Test
-  public void reduceIncorrectJsonFileThrowsException() {
-    assertThrows(JsonMappingException.class, () -> processService.reduce(CORRUPTED_FILE_PATH, SAVE_FILE_PATH));
+    // then
+    assertThatThrownBy(() -> processService.reduce(null))
+        .isInstanceOf(CorruptedFileException.class);
   }
 }
-*/
