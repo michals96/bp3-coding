@@ -7,11 +7,12 @@ import com.bp3.model.SimpleNode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
+@NoArgsConstructor
 class ProcessParser {
-
-  public ProcessParser() {
-  }
 
   public BpmnProcess reduceProcess(BpmnProcess process) {
     final var reducedNodes = reduceServiceTasks(process);

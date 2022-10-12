@@ -2,31 +2,29 @@ package com.bp3.service;
 
 import com.bp3.model.BpmnProcess;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import java.io.File;
 import java.io.IOException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+@Service
+@RequiredArgsConstructor
 public class ProcessService {
   private final ProcessParser processParser;
   private final ObjectMapper objectMapper;
 
-  public ProcessService() {
+/*  public ProcessService() {
     processParser = new ProcessParser();
     objectMapper = new ObjectMapper();
     objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+  }*/
+
+  public BpmnProcess reduce(final MultipartFile file) throws IOException {
+    final var bpmnProcess = loadProcessFromFile(file);
+    return processParser.reduceProcess(bpmnProcess);
   }
 
-  public void reduce(final String pathToFile, final String saveFilePath) throws IOException {
-    final var bpmnProcess = loadProcessFromFile(pathToFile);
-    final var reducedProcess = processParser.reduceProcess(bpmnProcess);
-    saveProcessToFile(reducedProcess, saveFilePath);
-  }
-
-  private BpmnProcess loadProcessFromFile(final String pathToFile) throws IOException {
-    return objectMapper.readValue(new File(pathToFile), BpmnProcess.class);
-  }
-
-  private void saveProcessToFile(final BpmnProcess reducedProcess, final String saveFilePath) throws IOException {
-    objectMapper.writeValue(new File(saveFilePath), reducedProcess);
+  private BpmnProcess loadProcessFromFile(final MultipartFile file) throws IOException {
+    return objectMapper.readValue(file.getBytes(), BpmnProcess.class);
   }
 }

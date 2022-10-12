@@ -1,5 +1,9 @@
 package com.bp3.api;
 
+import com.bp3.model.BpmnProcess;
+import com.bp3.service.ProcessService;
+import java.io.IOException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -8,10 +12,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/parse")
+@RequiredArgsConstructor
 public class BpmProcessController {
+  private final ProcessService processService;
 
   @PostMapping
-  public void parse(@RequestParam("file")MultipartFile file) {
-    System.out.println("ok");
+  public BpmnProcess parse(@RequestParam("file")MultipartFile file) throws IOException {
+    return processService.reduce(file);
   }
 }
