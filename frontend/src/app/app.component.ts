@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import Types from "./services/file-client.service";
+import BpmnProcess = Types.BpmnProcess;
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title: string = 'BP-3 Coding challenge';
+  process: BpmnProcess;
+
+  childToParent(process: BpmnProcess) {
+    this.process = process;
+  }
 }

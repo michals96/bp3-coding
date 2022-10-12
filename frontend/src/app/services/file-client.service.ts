@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import BpmnProcess = Types.BpmnProcess;
 
@@ -8,14 +8,13 @@ import BpmnProcess = Types.BpmnProcess;
 })
 export class FileClientService {
 
-  constructor(private httpClient: HttpClient) {
-
-  }
+  constructor(private httpClient: HttpClient) {}
 
   public uploadFile(file: File): Observable<BpmnProcess> {
     let data: FormData = new FormData();
     data.append('file', file);
-    return this.httpClient.post<BpmnProcess>('http://localhost:8080/parse', data);
+    return this.httpClient
+      .post<BpmnProcess>('http://localhost:8080/parse', data);
   }
 }
 
@@ -36,5 +35,7 @@ declare module Types {
     edges: Edge[];
   }
 }
+
+export default Types;
 
 

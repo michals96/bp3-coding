@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { FileClientService } from './file-client.service';
+import {FileClientService} from './file-client.service';
 
 describe('FileClientService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

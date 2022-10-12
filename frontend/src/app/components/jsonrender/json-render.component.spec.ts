@@ -1,20 +1,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {FileUploadComponent} from './file-upload.component';
+import {JsonRenderComponent} from './json-render.component';
 
-describe('FileuploadComponent', () => {
-  let component: FileUploadComponent;
-  let fixture: ComponentFixture<FileUploadComponent>;
+describe('JsonrenderComponent', () => {
+  let component: JsonRenderComponent;
+  let fixture: ComponentFixture<JsonRenderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [FileUploadComponent]
+      declarations: [JsonRenderComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FileUploadComponent);
+    fixture = TestBed.createComponent(JsonRenderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

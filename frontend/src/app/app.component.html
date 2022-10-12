@@ -1,3 +1,4 @@
 <h1>{{title}}</h1>
 
-<app-file-upload></app-file-upload>
+<app-file-upload (childToParent)="childToParent($event)"></app-file-upload>
+<app-json-render [childToMaster]=process></app-json-render>
