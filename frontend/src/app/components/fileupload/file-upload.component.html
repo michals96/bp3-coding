@@ -1,11 +1,15 @@
 <div class="container">
-  <div class="row mt-5">
-    <div class="col-md-4">
-      <div class="mb-3">
-        <label for="formFile" class="form-label">{{name}}</label>
-        <input (change)="this.onFileChange($event)" class="form-control" type="file" id="formFile" lang="en">
-        <button (click)="this.uploadFile()" type="button" class="btn btn-primary mt-3">Upload</button>
+  <label for="formFile" class="label"><strong>{{name}}</strong></label>
+  <div>
+    <div>
+<!--      <button mat-stroked-button color="primary" class="input-button">-->
+<!--        SELECT A FILE-->
+        <input (change)="this.onFileChange($event)" class="input" type="file" id="formFile">
+<!--      </button>-->
+      <div>
+        <label for="formFile" class="label"><strong>{{fileName}}</strong></label>
       </div>
+      <button mat-fab (click)="this.uploadFile()" type="button">Upload</button>
     </div>
   </div>
 </div>

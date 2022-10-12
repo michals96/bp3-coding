@@ -11,13 +11,16 @@ export class FileUploadComponent {
   @Output() childToParent = new EventEmitter<BpmnProcess>();
   name: string;
   file: File = null;
+  fileName: string;
 
   constructor(private fileClientService: FileClientService) {
-    this.name = 'Upload process file to parse';
+    this.name = 'Choose a file';
+    this.fileName = '';
   }
 
   onFileChange(event: any) {
-    this.file = event.target.files[0]
+    this.file = event.target.files[0];
+    this.fileName = event.target.files[0].name;
   }
 
   uploadFile() {
