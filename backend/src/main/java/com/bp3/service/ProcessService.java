@@ -1,8 +1,10 @@
 package com.bp3.service;
 
+import com.bp3.exception.CorruptedFileException;
 import com.bp3.model.BpmnProcess;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,18 +15,18 @@ public class ProcessService {
   private final ProcessParser processParser;
   private final ObjectMapper objectMapper;
 
-/*  public ProcessService() {
-    processParser = new ProcessParser();
-    objectMapper = new ObjectMapper();
-    objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-  }*/
-
-  public BpmnProcess reduce(final MultipartFile file) throws IOException {
+  public BpmnProcess reduce(final MultipartFile file) {
     final var bpmnProcess = loadProcessFromFile(file);
     return processParser.reduceProcess(bpmnProcess);
   }
 
-  private BpmnProcess loadProcessFromFile(final MultipartFile file) throws IOException {
-    return objectMapper.readValue(file.getBytes(), BpmnProcess.class);
+  private BpmnProcess loadProcessFromFile(final MultipartFile file) {
+    try {
+      return objectMapper.readValue(file.getBytes(), BpmnProcess.class);
+    } catch (JsonMappingException e) {
+      throw new CorruptedFileException("The file is corrupted");
+    } catch (Exception e) {
+      throw new CorruptedFileException("Bad request");
+    }
   }
 }
