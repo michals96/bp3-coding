@@ -38,4 +38,10 @@ export class FileUploadComponent {
   sendToParent(process: BpmnProcess) {
     this.childToParent.emit(process);
   }
+
+  clearProcess() {
+    this.file = null;
+    this.name = "";
+    this.childToParent.emit();
+  }
 }
