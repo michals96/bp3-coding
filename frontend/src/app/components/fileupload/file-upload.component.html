@@ -1,9 +1,28 @@
 <div class="container">
-  <label for="formFile" class="label"><strong>{{name}}</strong></label>
-  <div>
-    <input (change)="this.onFileChange($event)" class="input" type="file" id="formFile">
-    <div>
-      <button mat-fab (click)="this.uploadFile()" type="button">Upload</button>
+  <div class="button_container">
+    <div class="select_file">
+      <button mat-raised-button color="warn" (click)="fileInput.click()">
+        <mat-icon> attach_file</mat-icon>
+        <span>Select file</span>
+        <input #fileInput type="file" (change)="this.onFileChange($event)" class="input" style="display:none;"/>
+      </button>
+    </div>
+    <div class="upload_file">
+      <button mat-raised-button color="warn" (click)="this.uploadFile()" type="button">
+        <mat-icon>cloud_upload</mat-icon>
+        Upload
+      </button>
+    </div>
+    <div class="clear">
+      <button mat-raised-button color="warn" (click)="this.uploadFile()" type="button">
+        <mat-icon>clear</mat-icon>
+        Clear
+      </button>
     </div>
   </div>
+  <div class="file_name">
+    <h4>{{name}}</h4>
+  </div>
 </div>
+
+

@@ -9,15 +9,16 @@ import BpmnProcess = Types.BpmnProcess;
 })
 export class FileUploadComponent {
   @Output() childToParent = new EventEmitter<BpmnProcess>();
-  name: string;
   file: File = null;
+  name: string;
 
   constructor(private fileClientService: FileClientService) {
-    this.name = 'Choose a file';
+    this.name = '';
   }
 
   onFileChange(event: any) {
     this.file = event.target.files[0];
+    this.name = event.target.files[0].name;
   }
 
   uploadFile() {
