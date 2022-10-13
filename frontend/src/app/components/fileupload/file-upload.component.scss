@@ -7,25 +7,16 @@
 .button_container {
   display: flex;
   flex-direction: row;
-}
-
-.outline {
-  display: flex;
-  flex-direction: column;
+  justify-content: space-around;
 }
 
 .file_name {
-  justify-content: center;
-
+  text-align: center;
 }
 
 .upload_file {
-  position: absolute;
-  left: 122px;
 }
 
 .clear {
-  position: absolute;
-  left: 230px;
 }
 

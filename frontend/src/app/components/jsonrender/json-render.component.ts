@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
-import Types from "../../services/file-client.service";
-import BpmnProcess = Types.BpmnProcess;
+import {BpmnProcess} from "../../types/bpmn.types";
 
 @Component({
   selector: 'app-json-render',
@@ -9,7 +8,7 @@ import BpmnProcess = Types.BpmnProcess;
 })
 export class JsonRenderComponent {
 
-  @Input('childToMaster') process: BpmnProcess;
+  @Input() process: BpmnProcess;
 
   constructor() {
   }

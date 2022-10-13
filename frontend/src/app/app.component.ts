@@ -11,7 +11,7 @@ export class AppComponent {
   title: string = 'BP-3 Coding challenge';
   process: BpmnProcess;
 
-  childToParent(process: BpmnProcess) {
+  setProcess(process: BpmnProcess) {
     this.process = process;
   }
 }
