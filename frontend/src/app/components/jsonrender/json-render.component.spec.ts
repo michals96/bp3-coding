@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {JsonRenderComponent} from './json-render.component';
 
-describe('JsonrenderComponent', () => {
+describe('JsonRenderComponent', () => {
   let component: JsonRenderComponent;
   let fixture: ComponentFixture<JsonRenderComponent>;
 

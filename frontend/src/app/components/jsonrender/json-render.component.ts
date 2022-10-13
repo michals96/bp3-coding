@@ -7,9 +7,5 @@ import {BpmnProcess} from "../../types/bpmn.types";
   styleUrls: ['./json-render.component.scss'],
 })
 export class JsonRenderComponent {
-
   @Input() process: BpmnProcess;
-
-  constructor() {
-  }
 }

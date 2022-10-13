@@ -11,7 +11,7 @@ export class FileClientService {
   constructor(private httpClient: HttpClient) {
   }
 
-  public uploadFile(file: File): Observable<BpmnProcess> {
+  uploadFile(file: File): Observable<BpmnProcess> {
     let data: FormData = new FormData();
     data.append('file', file);
     return this.httpClient
