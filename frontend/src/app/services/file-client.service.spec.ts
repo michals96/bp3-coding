@@ -6,7 +6,7 @@ import {BpmnProcess} from "../types/bpmn.types";
 import {of} from "rxjs";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 
-describe('FileClientService creation tests', () => {
+describe('FileClientService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -14,13 +14,13 @@ describe('FileClientService creation tests', () => {
     }).compileComponents();
   });
 
-  it('FileClientService should be created', () => {
+  it('should be created', () => {
     const service: FileClientService = TestBed.get(FileClientService);
     expect(service).toBeTruthy();
   });
 });
 
-describe('FileClientService HTTP tests', () => {
+describe('FileClientService', () => {
   let fileClientService: FileClientService;
   let httpClientSpy: jasmine.SpyObj<HttpClient>;
 
@@ -32,7 +32,7 @@ describe('FileClientService HTTP tests', () => {
     fileClientService = new FileClientService(httpClientSpy);
   });
 
-  it('Should return expected process (HttpClient called once)', (done: DoneFn) => {
+  it('should return expected process (HttpClient called once)', (done: DoneFn) => {
     const expectedProcess: BpmnProcess =
       {
         "nodes": [

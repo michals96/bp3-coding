@@ -1,5 +1,5 @@
 <main class="container">
-  <h1>{{title}}</h1>
+  <h1 id="title">{{title}}</h1>
   <app-file-upload (clearFile)="clearFile()" (sendFile)="setProcess($event)"></app-file-upload>
   <app-json-render [process]=process></app-json-render>
 </main>
