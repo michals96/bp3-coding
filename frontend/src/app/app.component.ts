@@ -9,7 +9,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title: string = 'BP-3 Coding challenge';
+  title: string = 'BP-3 Coding challenge: Michal Stefaniuk';
   process: BpmnProcess;
 
   constructor(private fileClientService: FileClientService, private snackBar: MatSnackBar) {
@@ -22,13 +22,18 @@ export class AppComponent {
   setProcess(file: File) {
     this.fileClientService.uploadFile(file).subscribe(data => {
         this.process = data;
-        this.snackBar.open('Message archived', 'Undo', {
-          duration: 3000
+        this.snackBar.open('File parsed successfully', 'Ok', {
+          duration: 3000,
+          horizontalPosition: "center",
+          verticalPosition: "top"
         });
-        alert("File uploaded")
       },
       error => {
-        alert(error.error.message);
+        this.snackBar.open(error.error.message, 'Ok', {
+          duration: 3000,
+          horizontalPosition: "center",
+          verticalPosition: "top"
+        });
       })
   }
 }
