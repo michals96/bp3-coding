@@ -1,3 +1,9 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .button_container {
   display: flex;
   flex-direction: row;
@@ -9,14 +15,13 @@
 }
 
 .file_name {
-  position: absolute;
+  justify-content: center;
 
-  top: 132px;
 }
 
 .upload_file {
   position: absolute;
-  left: 120px;
+  left: 122px;
 }
 
 .clear {

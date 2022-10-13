@@ -1,7 +1,5 @@
-<div class="outline">
-  <div class="container">
-    <h1>{{title}}</h1>
-    <app-file-upload (childToParent)="childToParent($event)" class="file_upload"></app-file-upload>
-    <app-json-render [childToMaster]=process class="json_render"></app-json-render>
-  </div>
+<div class="container">
+  <h1>{{title}}</h1>
+  <app-file-upload (childToParent)="childToParent($event)" class="file_upload"></app-file-upload>
+  <app-json-render [childToMaster]=process class="json_render"></app-json-render>
 </div>
