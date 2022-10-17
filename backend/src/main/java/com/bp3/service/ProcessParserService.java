@@ -27,31 +27,64 @@ class ProcessParserService {
   private Map<String, List<String>> getGatewayConnections(final BpmnProcess process) {
     Map<String, List<String>> gatewayConnections = new HashMap<>();
 
-    final var gateways = process.getNodes().stream()
+    final var gatewaysInProcess = process.getNodes().stream()
         .filter(n -> n.getType() == NodeType.GATEWAY)
         .collect(toList());
 
-    final var edges = process.getEdges();
+    final var edgesInProcess = process.getEdges();
 
-    for (SimpleNode gateway : gateways) {
-      List<String> gatewayOutputs = new ArrayList<>();
-      for (SimpleEdge edge : edges) {
-        if (gateway.getId().equals(edge.getFrom())) {
-          final var b = (Integer.parseInt(gateway.getId()) > Integer.parseInt(edge.getTo())) ? gatewayOutputs.add(String.valueOf((Integer.parseInt(edge.getTo())*(-1)))) :
-              gatewayOutputs.add(edge.getTo());
-        }
-
-        if (gateway.getId().equals(edge.getTo())) {
-          gatewayOutputs.add(edge.getFrom());
-        }
-      }
-
-      if (!gatewayOutputs.isEmpty()) {
-        gatewayConnections.put(gateway.getId(), gatewayOutputs);
-      }
-    }
+    collectGatewayConnections(gatewayConnections, gatewaysInProcess, edgesInProcess);
 
     return gatewayConnections;
+  }
+
+  private void collectGatewayConnections(final Map<String, List<String>> gatewayConnections, final List<SimpleNode> gateways,
+                         final List<SimpleEdge> edges) {
+    for (final var gateway : gateways) {
+      List<String> connections = new ArrayList<>();
+      for (final var edge : edges) {
+        if (isGatewayInputEdge(gateway, edge)) {
+          collectInputConnection(gateway, connections, edge);
+        }
+
+        if (isGatewayOutputEdge(gateway, edge)) {
+          collectOutputConnection(connections, edge);
+        }
+      }
+
+      appendGatewayConnections(gatewayConnections, gateway, connections);
+    }
+  }
+
+  private void collectOutputConnection(final List<String> connections, final SimpleEdge edge) {
+    connections.add(edge.getFrom());
+  }
+
+  private void appendGatewayConnections(final Map<String, List<String>> gatewayConnections, final SimpleNode gateway, final List<String> gatewayOutputs) {
+    if (!gatewayOutputs.isEmpty()) {
+      gatewayConnections.put(gateway.getId(), gatewayOutputs);
+    }
+  }
+
+  private boolean isGatewayOutputEdge(final SimpleNode gateway, final SimpleEdge edge) {
+    return gateway.getId().equals(edge.getTo());
+  }
+
+  private void collectInputConnection(final SimpleNode gateway, final List<String> gatewayOutputs, final SimpleEdge edge) {
+    if (isRecursiveBranching(gateway, edge)) {
+      // Marking recursive branches as nodes with negative int as ID
+      gatewayOutputs.add(String.valueOf((Integer.parseInt(edge.getTo()) * (-1))));
+    } else {
+      gatewayOutputs.add(edge.getTo());
+    }
+  }
+
+  private boolean isRecursiveBranching(final SimpleNode gateway, final SimpleEdge edge) {
+    return Integer.parseInt(gateway.getId()) > Integer.parseInt(edge.getTo());
+  }
+
+  private boolean isGatewayInputEdge(final SimpleNode gateway, final SimpleEdge edge) {
+    return gateway.getId().equals(edge.getFrom());
   }
 
   private List<SimpleNode> reduceServiceTasks(final BpmnProcess process) {
@@ -66,27 +99,16 @@ class ProcessParserService {
 
   private List<SimpleEdge> createNewEdges(final List<SimpleNode> reducedNodes, Map<String, List<String>> gatewayConnections) {
     List<SimpleEdge> edges = new ArrayList<>();
+
     final var reducedNodesIds = reducedNodes.stream()
-        .map(n -> n.getId())
+        .map(SimpleNode::getId)
         .collect(toList());
 
     for (int i = 0; i < reducedNodes.size(); ++i) {
       if (i != reducedNodes.size() - 1) {
         final var node = reducedNodes.get(i + 1);
         if (node.getType().equals(NodeType.GATEWAY)) {
-          final var gatewayEdges = gatewayConnections.get(node.getId());
-          int gatewayOutputs = 0;
-          for (String edge : gatewayEdges) {
-            if (reducedNodesIds.contains(edge) && (Integer.valueOf(node.getId()) > Integer.valueOf(edge))) {
-              edges.add(new SimpleEdge(edge, node.getId()));
-            } else if ((reducedNodesIds.contains(edge) && (Integer.valueOf(node.getId()) < Integer.valueOf(edge)))) {
-              edges.add(new SimpleEdge(node.getId(), edge));
-              gatewayOutputs++;
-            } else if ((Integer.valueOf(edge) < 0 && reducedNodesIds.contains(String.valueOf(Math.abs(Integer.valueOf(edge)))))) {
-              edges.add(new SimpleEdge(node.getId(), String.valueOf(Math.abs(Integer.valueOf(edge)))));
-            }
-          }
-          i = i + gatewayOutputs;
+          i = createEdgeForGateway(gatewayConnections, edges, reducedNodesIds, i, node);
         } else {
           edges.add(new SimpleEdge(reducedNodes.get(i).getId(), node.getId()));
         }
@@ -94,5 +116,25 @@ class ProcessParserService {
     }
 
     return edges;
+  }
+
+  private int createEdgeForGateway(final Map<String, List<String>> gatewayConnections, final List<SimpleEdge> edges, final List<String> reducedNodesIds,
+                                   int i, final SimpleNode node) {
+    final var gatewayEdges = gatewayConnections.get(node.getId());
+    int gatewayOutputs = 0;
+
+    for (String edge : gatewayEdges) {
+      if (reducedNodesIds.contains(edge) && (Integer.parseInt(node.getId()) > Integer.parseInt(edge))) {
+        edges.add(new SimpleEdge(edge, node.getId()));
+      } else if ((reducedNodesIds.contains(edge) && (Integer.parseInt(node.getId()) < Integer.parseInt(edge)))) {
+        edges.add(new SimpleEdge(node.getId(), edge));
+        gatewayOutputs++;
+      } else if ((Integer.parseInt(edge) < 0 && reducedNodesIds.contains(String.valueOf(Math.abs(Integer.parseInt(edge)))))) {
+        edges.add(new SimpleEdge(node.getId(), String.valueOf(Math.abs(Integer.parseInt(edge)))));
+      }
+    }
+
+    i = i + gatewayOutputs;
+    return i;
   }
 }
