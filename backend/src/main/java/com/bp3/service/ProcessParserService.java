@@ -60,6 +60,15 @@ class ProcessParserService {
     connections.add(edge.getFrom());
   }
 
+  private void collectInputConnection(final SimpleNode gateway, final List<String> gatewayOutputs, final SimpleEdge edge) {
+    if (isRecursiveBranching(gateway, edge)) {
+      // Marking recursive branches as nodes with negative int as ID
+      gatewayOutputs.add(String.valueOf((Integer.parseInt(edge.getTo()) * (-1))));
+    } else {
+      gatewayOutputs.add(edge.getTo());
+    }
+  }
+
   private void appendGatewayConnections(final Map<String, List<String>> gatewayConnections, final SimpleNode gateway,
                                         final List<String> gatewayOutputs) {
     if (!gatewayOutputs.isEmpty()) {
@@ -69,15 +78,6 @@ class ProcessParserService {
 
   private boolean isGatewayOutputEdge(final SimpleNode gateway, final SimpleEdge edge) {
     return gateway.getId().equals(edge.getTo());
-  }
-
-  private void collectInputConnection(final SimpleNode gateway, final List<String> gatewayOutputs, final SimpleEdge edge) {
-    if (isRecursiveBranching(gateway, edge)) {
-      // Marking recursive branches as nodes with negative int as ID
-      gatewayOutputs.add(String.valueOf((Integer.parseInt(edge.getTo()) * (-1))));
-    } else {
-      gatewayOutputs.add(edge.getTo());
-    }
   }
 
   private boolean isRecursiveBranching(final SimpleNode gateway, final SimpleEdge edge) {
