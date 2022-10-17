@@ -43,12 +43,12 @@ class ProcessParserService {
     for (final var gateway : gateways) {
       List<String> connections = new ArrayList<>();
       for (final var edge : edges) {
-        if (isGatewayInputEdge(gateway, edge)) {
-          collectInputConnection(gateway, connections, edge);
+        if (isGatewayOutputEdge(gateway, edge)) {
+          collectOutputConnection(gateway, connections, edge);
         }
 
-        if (isGatewayOutputEdge(gateway, edge)) {
-          collectOutputConnection(connections, edge);
+        if (isGatewayInputEdge(gateway, edge)) {
+          collectInputConnection(connections, edge);
         }
       }
 
@@ -56,11 +56,11 @@ class ProcessParserService {
     }
   }
 
-  private void collectOutputConnection(final List<String> connections, final SimpleEdge edge) {
+  private void collectInputConnection(final List<String> connections, final SimpleEdge edge) {
     connections.add(edge.getFrom());
   }
 
-  private void collectInputConnection(final SimpleNode gateway, final List<String> gatewayOutputs, final SimpleEdge edge) {
+  private void collectOutputConnection(final SimpleNode gateway, final List<String> gatewayOutputs, final SimpleEdge edge) {
     if (isRecursiveBranching(gateway, edge)) {
       // Marking recursive branches as nodes with negative int as ID
       gatewayOutputs.add(String.valueOf((Integer.parseInt(edge.getTo()) * (-1))));
@@ -76,7 +76,7 @@ class ProcessParserService {
     }
   }
 
-  private boolean isGatewayOutputEdge(final SimpleNode gateway, final SimpleEdge edge) {
+  private boolean isGatewayInputEdge(final SimpleNode gateway, final SimpleEdge edge) {
     return gateway.getId().equals(edge.getTo());
   }
 
@@ -84,7 +84,7 @@ class ProcessParserService {
     return Integer.parseInt(gateway.getId()) > Integer.parseInt(edge.getTo());
   }
 
-  private boolean isGatewayInputEdge(final SimpleNode gateway, final SimpleEdge edge) {
+  private boolean isGatewayOutputEdge(final SimpleNode gateway, final SimpleEdge edge) {
     return gateway.getId().equals(edge.getFrom());
   }
 
