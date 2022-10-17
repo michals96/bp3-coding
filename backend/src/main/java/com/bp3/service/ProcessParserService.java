@@ -39,7 +39,7 @@ class ProcessParserService {
   }
 
   private void collectGatewayConnections(final Map<String, List<String>> gatewayConnections, final List<SimpleNode> gateways,
-                         final List<SimpleEdge> edges) {
+                                         final List<SimpleEdge> edges) {
     for (final var gateway : gateways) {
       List<String> connections = new ArrayList<>();
       for (final var edge : edges) {
@@ -60,7 +60,8 @@ class ProcessParserService {
     connections.add(edge.getFrom());
   }
 
-  private void appendGatewayConnections(final Map<String, List<String>> gatewayConnections, final SimpleNode gateway, final List<String> gatewayOutputs) {
+  private void appendGatewayConnections(final Map<String, List<String>> gatewayConnections, final SimpleNode gateway,
+                                        final List<String> gatewayOutputs) {
     if (!gatewayOutputs.isEmpty()) {
       gatewayConnections.put(gateway.getId(), gatewayOutputs);
     }
@@ -118,7 +119,8 @@ class ProcessParserService {
     return edges;
   }
 
-  private int createEdgeForGateway(final Map<String, List<String>> gatewayConnections, final List<SimpleEdge> edges, final List<String> reducedNodesIds,
+  private int createEdgeForGateway(final Map<String, List<String>> gatewayConnections, final List<SimpleEdge> edges,
+                                   final List<String> reducedNodesIds,
                                    int i, final SimpleNode node) {
     final var gatewayEdges = gatewayConnections.get(node.getId());
     int gatewayOutputs = 0;
