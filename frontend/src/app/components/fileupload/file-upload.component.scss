@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.button_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.file_name {
+  text-align: center;
+}
+
+.upload_file {
+}
+
+.clear {
+}
+

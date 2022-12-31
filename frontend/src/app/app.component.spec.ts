@@ -1,16 +1,39 @@
-import { TestBed, async } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponent } from './app.component';
+import {async, TestBed} from '@angular/core/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {AppComponent} from './app.component';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {BrowserModule} from "@angular/platform-browser";
+import {AppRoutingModule} from "./app-routing.module";
+import {HttpClientModule} from "@angular/common/http";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
+import {FileUploadComponent} from "./components/fileupload/file-upload.component";
+import {JsonRenderComponent} from "./components/jsonrender/json-render.component";
+
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatIconModule,
+        MatSnackBarModule
       ],
       declarations: [
-        AppComponent
-      ],
+        AppComponent,
+        FileUploadComponent,
+        JsonRenderComponent
+      ]
     }).compileComponents();
   }));
 
@@ -20,16 +43,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'frontend'`, () => {
+  it(`should have as title 'BP-3 Coding challenge: Michal Stefaniuk'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('frontend');
+    expect(app.title).toEqual('BP-3 Coding challenge: Michal Stefaniuk');
   });
 
-  it('should render title', () => {
+  it('should render title correctly', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('frontend app is running!');
+    expect(compiled.querySelector('h1').textContent).toContain('BP-3 Coding challenge: Michal Stefaniuk');
   });
 });
